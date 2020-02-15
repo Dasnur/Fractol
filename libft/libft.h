@@ -13,7 +13,7 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# define BUFF_SIZE 7
+# define BUFF_SIZE 1024
 # define CONTENT(x) ((t_info *)(x->content))->str
 
 # include <string.h>

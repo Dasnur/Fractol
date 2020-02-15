@@ -4,10 +4,32 @@
 #include "../minilibx/mlx.h"
 #include <math.h>
 #include "libft/libft.h"
-#include <Cl/cl.h>
+#include <CL/cl.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <fcntl.h>
+#include <time.h>
 
 #define MAX_ITER 255
+#define PROG_GPU "compute_gpu.cl"
+#define HEIGHT 1000
+#define WIDTH 1800
 
+typedef struct 		s_clp
+{
+	int				ret;
+	cl_platform_id	plat_id;
+	cl_uint			ret_num_platforms;
+	cl_device_id	dev_id;
+	cl_context		context;
+	cl_command_queue	command_queue;
+	char			*source;
+	cl_program		prog;
+	cl_kernel		kernel;
+	cl_mem			buffer;
+	cl_device_info	dev_info;
+}					t_clp;
+	
 typedef struct		s_clr
 {
 	int				r;
@@ -32,6 +54,7 @@ typedef struct      s_param
 	int				j;
 	t_img			img;
 	t_clr			clr;
+	t_clp			*clp;
 	int				height;
 	int				width;
 	double			re_min;
@@ -44,7 +67,12 @@ typedef struct      s_param
 	double			y;
 	double			x_new;
 	int				iter;
+	int				iter_max;
+	int				mse_x;
+	int				mse_y;
+	size_t			global;
 }					t_param;
 
+void	init_kernel_arg(t_clp *clp, t_param *p);
 
 #endif
